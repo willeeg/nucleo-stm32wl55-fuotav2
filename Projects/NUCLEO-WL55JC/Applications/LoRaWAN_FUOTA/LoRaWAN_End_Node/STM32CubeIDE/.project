@@ -563,6 +563,16 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>Middlewares/SmartDelta/src/fota_patch.h</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/SmartDelta/src/fota_patch.h</locationURI>
+		</link>
+		<link>
+			<name>Middlewares/SmartDelta/src/fota_patch_defs.h</name>
+			<type>1</type>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/Third_Party/SmartDelta/src/fota_patch_defs.h</locationURI>
+		</link>
+		<link>
 			<name>Application/User/KMS/App/app_kms.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/KMS/App/app_kms.c</locationURI>

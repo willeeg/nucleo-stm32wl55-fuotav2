@@ -288,6 +288,12 @@ uint32_t FLASH_IF_PAGE_Index (uint32_t pStart)
    return 0;
 }
 
+uint32_t FLASH_IF_EXT_Page_Address (uint32_t uIndex)
+{
+
+	return FLASH_IF_EXT_FLASH_ADDRESS + uIndex * MX25L4006_SECTOR_SIZE;
+}
+
 bool FLASH_IF_IsExt (uint32_t uStart)
 {
 	if (IS_FLASH_EXT_MEM_ADDRESS(uStart))
@@ -332,6 +338,47 @@ uint32_t FLASH_IF_CRC32 (uint32_t uStart, uint32_t uLength)
     return ~crc;
 }
 
+uint32_t FLASH_IF_Page_Size (void) {
+
+	return MX25L4006_SECTOR_SIZE;
+}
+
+
+uint32_t FLASH_IF_Alignment_Size (void) {
+
+	return FLASH_WRITE_ALIGNMENT;
+}
+
+uint32_t FLASH_IF_Active_Start (void) {
+
+	return FOTA_ACT_REGION_START;
+}
+
+uint32_t FLASH_IF_Active_Size (void) {
+
+	return FOTA_ACT_REGION_SIZE;
+}
+
+uint32_t FLASH_IF_Download_Start (void) {
+
+	return FOTA_DWL_REGION_START;
+}
+
+uint32_t FLASH_IF_Download_Size (void) {
+
+	return FOTA_DWL_REGION_SIZE;
+}
+
+uint32_t FLASH_IF_Swap_Start (void) {
+
+	return FOTA_SWAP_REGION_START;
+}
+
+uint32_t FLASH_IF_Swap_Size (void) {
+
+	return FOTA_SWAP_REGION_SIZE;
+}
+
 /* USER CODE END EF */
 
 /* Private Functions Definition -----------------------------------------------*/
@@ -354,6 +401,7 @@ static FLASH_IF_StatusTypedef FLASH_IF_INT_Write(void *pDestination, const void 
   uint32_t current_dest;
   uint32_t current_source;
   uint32_t current_length;
+  uint64_t src_value;
 
   if ((pDestination == NULL) || (pSource == NULL) || !IS_ADDR_ALIGNED_64BITS(uLength)
       || !IS_ADDR_ALIGNED_64BITS((uint32_t)pDestination))
@@ -415,12 +463,12 @@ static FLASH_IF_StatusTypedef FLASH_IF_INT_Write(void *pDestination, const void 
 
         for (address_offset = 0U; address_offset < current_length; address_offset += 8U)
         {
+          UTIL_MEM_cpy_8(&src_value, (uint8_t *)(current_source + address_offset), sizeof(uint64_t));
           /* Device voltage range supposed to be [2.7V to 3.6V], the operation will be done by word */
-          if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, current_dest,
-                                *((uint64_t *)(current_source + address_offset))) == HAL_OK)
+          if (HAL_FLASH_Program(FLASH_TYPEPROGRAM_DOUBLEWORD, current_dest, src_value) == HAL_OK)
           {
             /* Check the written value */
-            if (*(uint64_t *)current_dest != *(uint64_t *)(current_source + address_offset))
+            if (*(uint64_t *)current_dest != src_value)
             {
               /* Flash content doesn't match SRAM content */
               ret_status = FLASH_IF_WRITE_ERROR;

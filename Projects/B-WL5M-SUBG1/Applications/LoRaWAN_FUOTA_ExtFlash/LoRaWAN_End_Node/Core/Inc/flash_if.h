@@ -30,7 +30,7 @@ extern "C" {
 #include "platform.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "sfu_fwimg_regions.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -57,7 +57,7 @@ typedef enum
 #define FLASH_IF_BUFFER_SIZE       0x00001000U /*!< External FLASH Sector Size, 4 KBytes */
 
 /* USER CODE BEGIN EC */
-
+#define FLASH_WRITE_ALIGNMENT		8	/*!< FLASH writes should be aligned on 8 bytes */
 /* USER CODE END EC */
 
 /* External variables --------------------------------------------------------*/
@@ -67,7 +67,17 @@ typedef enum
 
 /* Exported macro ------------------------------------------------------------*/
 /* USER CODE BEGIN EM */
+#define FOTA_SWAP_REGION_START              ((uint32_t)(SlotStartAdd[SLOT_SWAP]))
+#define FOTA_SWAP_REGION_SIZE               ((uint32_t)(SlotEndAdd[SLOT_SWAP] - SlotStartAdd[SLOT_SWAP] + 1U))
+#define FOTA_SWAP_REGION_END                ((uint32_t)(SlotEndAdd[SLOT_SWAP]))
 
+#define FOTA_DWL_REGION_START               ((uint32_t)(SlotStartAdd[SLOT_DWL_1]))
+#define FOTA_DWL_REGION_SIZE                ((uint32_t)(SlotEndAdd[SLOT_DWL_1] - SlotStartAdd[SLOT_DWL_1] + 1U))
+#define FOTA_DWL_REGION_END                 ((uint32_t)(SlotEndAdd[SLOT_DWL_1]))
+
+#define FOTA_ACT_REGION_START               ((uint32_t)(SlotStartAdd[SLOT_ACTIVE_1]))
+#define FOTA_ACT_REGION_SIZE                ((uint32_t)(SlotEndAdd[SLOT_ACTIVE_1] - SlotStartAdd[SLOT_ACTIVE_1] + 1U))
+#define FOTA_ACT_REGION_END                 ((uint32_t)(SlotEndAdd[SLOT_ACTIVE_1])
 /* USER CODE END EM */
 
 /* Exported functions prototypes ---------------------------------------------*/
@@ -121,9 +131,17 @@ FLASH_IF_StatusTypedef FLASH_IF_Erase(void *pStart, uint32_t uLength);
  * @brief This function returns page index in internal or external flash
  *
  * @param uStart flash address to get page index
- * @return Number of pages
+ * @return Index of page within given address
  */
 uint32_t FLASH_IF_PAGE_Index (uint32_t uStart);
+
+/**
+ * @brief This function returns address of the page from internal flash
+ *
+ * @param uIndex flash page index to get address
+ * @return Address of the page with given uIndex
+ */
+uint32_t FLASH_IF_EXT_Page_Address (uint32_t uIndex);
 
 /**
  * @brief Check if address is in external flash
@@ -141,6 +159,70 @@ bool FLASH_IF_IsExt (uint32_t uStart);
  * @return CRC32 value
  */
 uint32_t FLASH_IF_CRC32 (uint32_t uStart, uint32_t uLength);
+
+/**
+ * @brief Get flash page size
+ *
+ * @param None
+ * @return flash page size in bytes
+ */
+uint32_t FLASH_IF_Page_Size (void);
+
+/**
+ * @brief Get alignment of flash write calls
+ *
+ * @param None
+ * @return alignment of flash write calls in bytes
+ */
+uint32_t FLASH_IF_Alignment_Size (void);
+
+/**
+ * @brief Get ACTIVE region start address
+ *
+ * @param None
+ * @return ACTIVE region start address
+ */
+uint32_t FLASH_IF_Active_Start (void);
+
+/**
+ * @brief Get size of ACTIVE region in bytes
+ *
+ * @param None
+ * @return Returns size of ACTIVE region in bytes
+ */
+uint32_t FLASH_IF_Active_Size (void);
+
+/**
+ * @brief Get ACTIVE region start address
+ *
+ * @param None
+ * @return ACTIVE region start address
+ */
+uint32_t FLASH_IF_Download_Start (void);
+
+/**
+ * @brief Get size of DOWNLOAD region in bytes
+ *
+ * @param None
+ * @return Returns size of DOWNLOAD region in bytes
+ */
+uint32_t FLASH_IF_Download_Size (void);
+
+/**
+ * @brief Get ACTIVE region start address
+ *
+ * @param None
+ * @return ACTIVE region start address
+ */
+uint32_t FLASH_IF_Swap_Start (void);
+
+/**
+ * @brief Get size of SWAP region in bytes
+ *
+ * @param None
+ * @return Returns size of SWAP region in bytes
+ */
+uint32_t FLASH_IF_Swap_Size (void);
 
 /* USER CODE END EFP */
 

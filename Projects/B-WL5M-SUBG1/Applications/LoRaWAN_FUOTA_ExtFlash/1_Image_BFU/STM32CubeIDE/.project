@@ -285,22 +285,22 @@
 		<link>
 			<name>Middlewares/STM32_Key_Management_Services/iKMS/se_interface_kms.c</name>
 			<type>1</type>
-			<locationURI>PARENT-8-PROJECT_LOC/fuota20_wl5m/stm32cube_fw2_wl/Middlewares/ST/STM32_Key_Management_Services/iKMS/se_interface_kms.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/STM32_Key_Management_Services/iKMS/se_interface_kms.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/STM32_Secure_Engine/Core/se_interface_application.c</name>
 			<type>1</type>
-			<locationURI>PARENT-8-PROJECT_LOC/fuota20_wl5m/stm32cube_fw2_wl/Middlewares/ST/STM32_Secure_Engine/Core/se_interface_application.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/STM32_Secure_Engine/Core/se_interface_application.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/STM32_Secure_Engine/Core/se_interface_bootloader.c</name>
 			<type>1</type>
-			<locationURI>PARENT-8-PROJECT_LOC/fuota20_wl5m/stm32cube_fw2_wl/Middlewares/ST/STM32_Secure_Engine/Core/se_interface_bootloader.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/STM32_Secure_Engine/Core/se_interface_bootloader.c</locationURI>
 		</link>
 		<link>
 			<name>Middlewares/STM32_Secure_Engine/Core/se_interface_common.c</name>
 			<type>1</type>
-			<locationURI>PARENT-8-PROJECT_LOC/fuota20_wl5m/stm32cube_fw2_wl/Middlewares/ST/STM32_Secure_Engine/Core/se_interface_common.c</locationURI>
+			<locationURI>PARENT-6-PROJECT_LOC/Middlewares/ST/STM32_Secure_Engine/Core/se_interface_common.c</locationURI>
 		</link>
 	</linkedResources>
 </projectDescription>
